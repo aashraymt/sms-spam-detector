@@ -1,0 +1,4 @@
+*.pdf
+*.docx
+nltk_data/
+.ssh/
