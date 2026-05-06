@@ -4,45 +4,65 @@
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)
 ![NLTK](https://img.shields.io/badge/NLTK-blue?style=for-the-badge)
 
-## 📋 Project Overview
+##  Summary
 
-Unsolicited and malicious SMS payloads (Smishing) present a critical threat vector for social engineering and credential harvesting. Traditional static blocklists fail to intercept dynamically generated phishing lures. 
+**The Threat Landscape:** SMS Phishing (Smishing) and social engineering payloads represent a critical vulnerability in modern enterprise perimeters. Attackers leverage dynamically generated texts to bypass static blocklists and harvest credentials.
 
-This project engineers a probabilistic machine learning pipeline designed to classify SMS messages as benign (Ham) or malicious (Spam). Built with Python and Scikit-Learn, the architecture focuses on robust feature extraction, rigorous hyperparameter tuning, and CI/CD-ready artifact serialization.
+**Project Objective:** This project builds a probabilistic, automated machine learning defense mechanism designed to classify inbound SMS traffic as benign or malicious with high mathematical confidence.
 
-## Architecture
+## Technical Architecture
 
-The system is built on a streamlined data-to-deployment workflow ensuring mathematical consistency and preventing data leakage.
+**Core Stack:** Python 3.10+, Scikit-Learn, NLTK, Joblib.
 
-* **Dataset:** 2011 UCI SMS Spam Collection (5,572 annotated samples).
-* **NLP Preprocessing:** NLTK-driven pipeline executing tokenization, stop-word removal, and Porter Stemming.
-* **Feature Extraction:** `CountVectorizer` mapping text to sparse matrices utilizing unigrams and bigrams (`ngram_range=(1,2)`).
-* **Classification Engine:** `MultinomialNB` (Naive Bayes) optimized for discrete text frequency data.
-* **Serialization:** Model exported via `joblib` for immediate API integration.
+**Workflow Diagram:**
+`Data Ingestion -> NLP Normalization -> Feature Vectorization -> Naive Bayes Classification -> Artifact Serialization`
 
-## Key Engineering Decisions
+## Data Engineering & Natural Language Processing
 
-To elevate this model from a basic script to a production-ready security tool, several strict engineering constraints were applied:
+**Dataset Procurement:** The pipeline ingests the 2011 UCI SMS Spam Collection, establishing a foundational baseline of 5,572 annotated messages.
 
-1. **Preserving High-Signal Indicators:** Standard NLP pipelines strip all punctuation. This pipeline utilizes custom Regular Expressions to explicitly preserve currency (`$`) and exclamation (`!`) symbols. In an AppSec context, these characters act as high-value heuristic flags for urgent financial phishing.
-2. **Preventing Data Leakage:** The vectorizer and classifier are bound together using an `sklearn.pipeline.Pipeline`. This ensures the exact same transformation logic applied during training is identically enforced during testing and production inference.
-3. **Hyperparameter Optimization:** Default configurations are rarely optimal. The model employs `GridSearchCV` with 5-fold cross-validation to mathematically isolate the optimal Laplace Smoothing parameter (`alpha: 0.25`), balancing the bias-variance tradeoff.
-4. **Deployment Readiness:** The final pipeline is serialized into a standalone `.joblib` binary. This decouples the training logic from the application logic, allowing the model to be instantly loaded into a DevSecOps environment or a FastAPI endpoint without retraining.
+**Security-Focused Heuristics:** Standard NLP cleaning strips all non-alphabetic characters. This pipeline implements custom Regular Expressions to explicitly preserve currency symbols ($) and exclamation marks (!). These characters serve as high-signal indicators of compromise in financial phishing lures.
 
-## Performance & Proof of Concept
+**Noise Reduction:** The text undergoes rigorous normalization, including tokenization, stop-word removal, and Porter Stemming, isolating the root linguistic patterns required for accurate modeling.
 
-The model was evaluated against a synthetic set of unseen, real-world inputs to test baseline accuracy and predictive confidence.
+<img width="767" height="606" alt="image" src="https://github.com/user-attachments/assets/2b19f557-11ab-465d-a4cb-d6713bb9fe39" />
 
-*(Insert Screenshot: Terminal output showing the optimal alpha and the test message probability scores)*
+## Mathematical Foundation & Classification
 
-**Inference Results:**
-* Successfully classified aggressive phishing attempts (Walmart gift card lures) with **1.00 Spam Probability**.
-* Accurately filtered routine benign communications (appointment reminders) with **1.00 Not-Spam Probability**.
-* Demonstrated nuanced context awareness by flagging simulated account compromise alerts as Spam with a **0.96 Probability**.
+**Feature Extraction:** Unstructured text is mathematically mapped into sparse matrices using a Bag-of-Words approach. The `CountVectorizer` utilizes both unigrams and bigrams to capture local linguistic context.
 
-## ⚙️ Quick Start & Reproducibility
+**The Naive Bayes Engine:** The core classification relies on Bayes' Theorem, calculating the posterior probability of a message being spam based on historical word frequency distributions.
 
-**1. Clone the repository and install dependencies:**
+**Hyperparameter Tuning:** A `GridSearchCV` implementation with 5-fold cross-validation mathematically isolates the optimal Laplace Smoothing parameter. This prevents zero-probability crashes when the model encounters unseen vocabulary in production.
+
+<img width="1097" height="629" alt="image" src="https://github.com/user-attachments/assets/0b241dc1-2652-4adf-87cc-a14b0afb1d41" />
+
+
+## DevSecOps & Deployment Logistics
+
+**Pipeline Binding:** Scikit-Learn's `Pipeline` architecture binds the vectorizer and classifier. This strict sequencing prevents data leakage between the training and inference phases.
+
+**Artifact Serialization:** The fully trained pipeline is decoupled from the development environment using `joblib`. This creates a binary artifact ready for rapid CI/CD integration.
+
+**Remote Validation:** To simulate production deployment, the serialized artifact was successfully transmitted via an HTTP POST request to a remote REST API evaluation server.
+
+## Proof of Concept & Efficacy
+
+The model was validated against a synthetic holdout set, demonstrating exceptional accuracy.
+
+* **High-Confidence Spam Detection:** Correctly classified blatant phishing lures (e.g., fraudulent gift card links) with a 1.00 probability score.
+* **Nuanced Threat Recognition:** Successfully flagged simulated account compromise alerts as malicious with a 0.96 probability score.
+* **Benign Traffic Filtering:** Accurately identified routine, safe communications with a 1.00 probability of being non-spam.
+
+## Quick Start & Reproducibility
+
+**Prerequisites:** Python 3.10+ and pip.
+
+**Installation:**
+```bash
+git clone [https://github.com/aashraymt2/sms-spam-detector.git](https://github.com/aashraymt2/sms-spam-detector.git)
+cd sms-spam-detector
+pip install -r requirements.txt
 ```bash
 git clone [https://github.com/yourusername/sms-spam-detector.git](https://github.com/yourusername/sms-spam-detector.git)
 cd sms-spam-detector
