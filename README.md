@@ -25,8 +25,6 @@
 
 **Noise Reduction:** The text undergoes rigorous normalization, including tokenization, stop-word removal, and Porter Stemming, isolating the root linguistic patterns required for accurate modeling.
 
-<img width="767" height="606" alt="image" src="https://github.com/user-attachments/assets/2b19f557-11ab-465d-a4cb-d6713bb9fe39" />
-
 ## Mathematical Foundation & Classification
 
 **Feature Extraction:** Unstructured text is mathematically mapped into sparse matrices using a Bag-of-Words approach. The `CountVectorizer` utilizes both unigrams and bigrams to capture local linguistic context.
@@ -34,8 +32,6 @@
 **The Naive Bayes Engine:** The core classification relies on Bayes' Theorem, calculating the posterior probability of a message being spam based on historical word frequency distributions.
 
 **Hyperparameter Tuning:** A `GridSearchCV` implementation with 5-fold cross-validation mathematically isolates the optimal Laplace Smoothing parameter. This prevents zero-probability crashes when the model encounters unseen vocabulary in production.
-
-<img width="1097" height="629" alt="image" src="https://github.com/user-attachments/assets/0b241dc1-2652-4adf-87cc-a14b0afb1d41" />
 
 
 ## DevSecOps & Deployment Logistics
