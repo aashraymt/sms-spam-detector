@@ -17,6 +17,32 @@
 **Workflow Diagram:**
 `Data Ingestion -> NLP Normalization -> Feature Vectorization -> Naive Bayes Classification -> Artifact Serialization`
 
+## 🎯 Automated Remote Evaluation (HackTheBox)
+
+To validate the model's efficacy against an objective, external standard, the serialized artifact was deployed to an evaluation portal hosted on a HackTheBox (HTB) target VM. This process simulated a true MLOps deployment where a model is pushed to a staging environment and evaluated against a hidden holdout dataset.
+
+### Deployment Methodology
+
+Instead of manual upload, the deployment was automated via a custom Python script. The script transmits the `.joblib` model through an HTTP POST request directly to the evaluation API endpoint. 
+
+```python
+import requests
+import json
+
+# Define the target evaluation API endpoint
+url = "http://localhost:8000/api/upload"
+model_file_path = "spam_detection_model.joblib"
+
+print(f"Deploying {model_file_path} to {url}...")
+
+# Transmit the serialized artifact securely
+with open(model_file_path, "rb") as model_file:
+    files = {"model": model_file}
+    response = requests.post(url, files=files)
+
+# Parse the evaluation response
+print(json.dumps(response.json(), indent=4))
+```
 ## Data Engineering & Natural Language Processing
 
 **Dataset Procurement:** The pipeline ingests the 2011 UCI SMS Spam Collection, establishing a foundational baseline of 5,572 annotated messages.
