@@ -56,6 +56,6 @@ The model was validated against a synthetic holdout set, demonstrating exception
 
 **Installation:**
 ```bash
-git clone [https://github.com/aashraymt2/sms-spam-detector.git](https://github.com/aashraymt2/sms-spam-detector.git)
+git clone [https://github.com/aashraymt/sms-spam-detector.git](https://github.com/aashraymt/sms-spam-detector.git)
 cd sms-spam-detector
 pip install -r requirements.txt
