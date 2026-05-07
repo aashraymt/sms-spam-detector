@@ -43,6 +43,8 @@ with open(model_file_path, "rb") as model_file:
 # Parse the evaluation response
 print(json.dumps(response.json(), indent=4))
 ```
+<img width="1145" height="589" alt="image" src="https://github.com/user-attachments/assets/0947560e-e219-4685-8024-893255865689" />
+
 ## Data Engineering & Natural Language Processing
 
 **Dataset Procurement:** The pipeline ingests the 2011 UCI SMS Spam Collection, establishing a foundational baseline of 5,572 annotated messages.
